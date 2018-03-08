@@ -1,1 +1,7 @@
 vendor/
+
+# Generated Assets
+app/
+client/
+swagger/
+tool/cli/

@@ -69,3 +69,32 @@ func (t *todoRepository) Show(ctx context.Context, ID uint) (*Todo, error) {
 	}
 	return &tempTodo, nil
 }
+
+func (t *todoRepository) Update(ctx context.Context, newTodo *Todo, ID uint) (*Todo, error) {
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		return nil, errors.New("Failed to connect to database")
+	}
+	defer db.Close()
+
+	var tempTodo Todo
+	if err := db.First(&tempTodo, ID).Error; err != nil {
+		// Todo - Raise this error diffently
+		return nil, errors.New("Failed to fetch item from database")
+	}
+	// Update Title
+	if tempTodo.Title != newTodo.Title {
+		newDB := db.Model(&tempTodo).Update("Title", newTodo.Title)
+		if newDB.Error != nil {
+			return &Todo{}, newDB.Error
+		}
+	}
+	// Update Description
+	if tempTodo.Description != newTodo.Description {
+		newDB := db.Model(&tempTodo).Update("Description", newTodo.Description)
+		if newDB.Error != nil {
+			return &Todo{}, newDB.Error
+		}
+	}
+	return &tempTodo, nil
+}

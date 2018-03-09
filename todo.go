@@ -36,12 +36,13 @@ func (c *TodoController) Create(ctx *app.CreateTodoContext) error {
 
 // Delete runs the delete action.
 func (c *TodoController) Delete(ctx *app.DeleteTodoContext) error {
-	// TodoController_Delete: start_implement
-
-	// Put your logic here
-
-	return nil
-	// TodoController_Delete: end_implement
+	err := c.repository.Delete(ctx, uint(ctx.ID))
+	if err != nil {
+		// Todo - Send error message
+		return ctx.NotFound()
+	}
+	// Todo - return success message
+	return ctx.OK([]byte{})
 }
 
 // List runs the list action.
@@ -71,11 +72,18 @@ func (c *TodoController) Show(ctx *app.ShowTodoContext) error {
 
 // Update runs the update action.
 func (c *TodoController) Update(ctx *app.UpdateTodoContext) error {
-	// TodoController_Update: start_implement
-
-	// Put your logic here
-
-	res := &app.Todo{}
+	newTodo, err := c.repository.Update(ctx, &Todo{
+		Title:       ctx.Payload.Title,
+		Description: ctx.Payload.Description,
+	}, uint(ctx.ID))
+	if err != nil {
+		// TODO - This should be internal server error
+		return ctx.BadRequest()
+	}
+	res := &app.Todo{
+		ID:          int(newTodo.ID),
+		Title:       newTodo.Title,
+		Description: newTodo.Description,
+	}
 	return ctx.OK(res)
-	// TodoController_Update: end_implement
 }

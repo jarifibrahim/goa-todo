@@ -8,6 +8,7 @@ import (
 // TodoController implements the todo resource.
 type TodoController struct {
 	*goa.Controller
+	repository todoRepository
 }
 
 // NewTodoController creates a todo controller.
@@ -17,12 +18,20 @@ func NewTodoController(service *goa.Service) *TodoController {
 
 // Create runs the create action.
 func (c *TodoController) Create(ctx *app.CreateTodoContext) error {
-	// TodoController_Create: start_implement
+	todo, err := c.repository.Create(ctx, &Todo{
+		Title:       ctx.Payload.Title,
+		Description: ctx.Payload.Description,
+	})
 
-	// Put your logic here
-
-	return nil
-	// TodoController_Create: end_implement
+	if err != nil {
+		// Todo - return internal server error
+		return nil
+	}
+	return ctx.Created(&app.Todo{
+		ID:          int(todo.ID),
+		Title:       todo.Title,
+		Description: todo.Description,
+	})
 }
 
 // Delete runs the delete action.
@@ -46,13 +55,18 @@ func (c *TodoController) List(ctx *app.ListTodoContext) error {
 
 // Show runs the show action.
 func (c *TodoController) Show(ctx *app.ShowTodoContext) error {
-	// TodoController_Show: start_implement
+	todoItem, err := c.repository.Show(ctx, uint(ctx.ID))
+	if err != nil {
+		// Todo - return NotFound with error message
+		return ctx.NotFound()
+	}
 
-	// Put your logic here
-
-	res := &app.Todo{}
+	res := &app.Todo{
+		ID:          int(todoItem.ID),
+		Title:       todoItem.Title,
+		Description: todoItem.Description,
+	}
 	return ctx.OK(res)
-	// TodoController_Show: end_implement
 }
 
 // Update runs the update action.

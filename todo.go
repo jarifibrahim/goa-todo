@@ -47,11 +47,20 @@ func (c *TodoController) Delete(ctx *app.DeleteTodoContext) error {
 
 // List runs the list action.
 func (c *TodoController) List(ctx *app.ListTodoContext) error {
-	// TodoController_List: start_implement
-
-	// Put your logic here
-	return nil
-	// TodoController_List: end_implement
+	todoList, err := c.repository.List(ctx)
+	if err != nil {
+		// TODO - send error message
+		return ctx.NotFound()
+	}
+	resp := []*app.Todo{}
+	for _, t := range todoList {
+		resp = append(resp, &app.Todo{
+			ID:          int(t.ID),
+			Title:       t.Title,
+			Description: t.Description,
+		})
+	}
+	return ctx.OK(resp)
 }
 
 // Show runs the show action.

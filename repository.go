@@ -53,7 +53,16 @@ func (t *todoRepository) Delete(ctx context.Context, ID uint) error {
 }
 
 func (t *todoRepository) List(ctx context.Context) ([]Todo, error) {
-	return nil, nil
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("Failed to connect database")
+	}
+	defer db.Close()
+	var todolist []Todo
+	if err := db.Find(&todolist).Error; err != nil {
+		return nil, errors.New("Failed to fetch all todo items from database")
+	}
+	return todolist, nil
 }
 
 func (t *todoRepository) Show(ctx context.Context, ID uint) (*Todo, error) {

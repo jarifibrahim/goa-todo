@@ -1,5 +1,5 @@
-hash: 1017791ef1dd4130a097403044f77b6507f1cc20637f845e8de992d536074a89
-updated: 2018-03-08T20:02:51.387749709+05:30
+hash: 02d67756a727cced075dda9c065c48f6e8b8a489c8173f0d9a2ea5322d21f447
+updated: 2018-03-09T12:35:52.282666853+05:30
 imports:
 - name: github.com/armon/go-metrics
   version: 9a4b6e10bed6220a1665955aa2b75afc91eb10b3
@@ -8,7 +8,7 @@ imports:
 - name: github.com/dimfeld/httptreemux
   version: 13dde8a00d96b369e7398490fd8a3af9ca114b84
 - name: github.com/goadesign/goa
-  version: fc29b77a218fb9e190849c81911ed12d25e771de
+  version: 5646a430cdeb66983d5ace3384e0a667c185abc7
   subpackages:
   - client
   - design
@@ -26,7 +26,16 @@ imports:
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/jinzhu/gorm
-  version: 6ed508ec6a4ecb3531899a69cbc746ccf65a4166
+  version: 9c9de896864248929269a7cb2d64ed73b5fdf834
+  subpackages:
+  - dialects/postgres
+- name: github.com/jinzhu/inflection
+  version: 74387dc39a75e970e7a3ae6a3386b5bd2e5c5cff
+- name: github.com/lib/pq
+  version: 4a82388ebc5138c8289fe9bc602cb0b3e32cd617
+  subpackages:
+  - hstore
+  - oid
 - name: github.com/manveru/faker
   version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
 - name: github.com/satori/go.uuid

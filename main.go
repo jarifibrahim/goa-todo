@@ -3,9 +3,12 @@
 package main
 
 import (
+	"github.com/jarifibrahim/todo/app"
+
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
-	"github.com/jarifibrahim/todo/app"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 func main() {
@@ -22,8 +25,22 @@ func main() {
 	c := NewTodoController(service)
 	app.MountTodoController(service, c)
 
+	// Initialize Database
+	initDB()
+
 	// Start service
 	if err := service.ListenAndServe(":8080"); err != nil {
 		service.LogError("startup", "err", err)
 	}
+}
+
+func initDB() {
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("failed to connect database")
+	}
+	defer db.Close()
+
+	// Migrate the schema
+	db.AutoMigrate(&Todo{})
 }

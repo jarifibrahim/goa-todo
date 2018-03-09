@@ -6,3 +6,5 @@ import:
   version: 9c9de896864248929269a7cb2d64ed73b5fdf834
 - package: github.com/satori/go.uuid
   version: v1.2.0
+- package: github.com/mattn/go-sqlite3
+  version: ^1.6.0

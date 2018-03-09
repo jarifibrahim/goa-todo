@@ -1,5 +1,5 @@
-hash: 02d67756a727cced075dda9c065c48f6e8b8a489c8173f0d9a2ea5322d21f447
-updated: 2018-03-09T12:35:52.282666853+05:30
+hash: 8daf5ec553d3b4e14f4173715b239ab28733c76784ba021799542425fe45e0d2
+updated: 2018-03-09T13:12:05.618805039+05:30
 imports:
 - name: github.com/armon/go-metrics
   version: 9a4b6e10bed6220a1665955aa2b75afc91eb10b3
@@ -28,16 +28,13 @@ imports:
 - name: github.com/jinzhu/gorm
   version: 9c9de896864248929269a7cb2d64ed73b5fdf834
   subpackages:
-  - dialects/postgres
+  - dialects/sqlite
 - name: github.com/jinzhu/inflection
   version: 74387dc39a75e970e7a3ae6a3386b5bd2e5c5cff
-- name: github.com/lib/pq
-  version: 4a82388ebc5138c8289fe9bc602cb0b3e32cd617
-  subpackages:
-  - hstore
-  - oid
 - name: github.com/manveru/faker
   version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
+- name: github.com/mattn/go-sqlite3
+  version: 6c771bb9887719704b210e87e934f08be014bdb1
 - name: github.com/satori/go.uuid
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/spf13/cobra
